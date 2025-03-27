@@ -16,20 +16,28 @@ rod1 = Rod()
 rod2 = Rod()
 rod3 = Rod()
 
-for d in reversed(range(1, 3)):
+for d in reversed(range(1, 4)):
     rod1.append(d)
 # >>> rod1
 # [2, 1]
 
 
-def move2():
-    d = rod1.pop()
+def empty_rod3():
+    """Move disks from ROD3 to ROD1"""
+    move2(rod3, rod1)
+
+
+def move2(rod_from: Rod, rod_to: Rod):
+    """Move two top disks from ROD_FROM to ROD_TO"""
+    d = rod_from.pop()
     rod2.append(d)
-    rod3.append(rod1.pop())
-    rod3.append(rod2.pop())
+    rod_to.append(rod_from.pop())
+    rod_to.append(rod2.pop())
 
 
 if __name__ == "__main__":
     print(f"{rod1 = }, {rod2 = }, {rod3 = }")
-    move2()
+    move2(rod1, rod3)
+    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
+    empty_rod3()
     print(f"{rod1 = }, {rod2 = }, {rod3 = }")
