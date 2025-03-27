@@ -24,7 +24,7 @@ for d in reversed(range(1, 4)):
 
 def empty_rod3():
     """Move disks from ROD3 to ROD1"""
-    move2(rod3, rod1)
+    move2(rod3, rod2, rod_temp=rod1)
 
 
 def move2(rod_from: Rod, rod_to: Rod, rod_temp: Rod = rod2):
