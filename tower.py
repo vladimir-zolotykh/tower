@@ -27,12 +27,12 @@ def empty_rod3():
     move2(rod3, rod1)
 
 
-def move2(rod_from: Rod, rod_to: Rod):
+def move2(rod_from: Rod, rod_to: Rod, rod_temp: Rod = rod2):
     """Move two top disks from ROD_FROM to ROD_TO"""
     d = rod_from.pop()
-    rod2.append(d)
+    rod_temp.append(d)
     rod_to.append(rod_from.pop())
-    rod_to.append(rod2.pop())
+    rod_to.append(rod_temp.pop())
 
 
 if __name__ == "__main__":
