@@ -41,3 +41,7 @@ if __name__ == "__main__":
     print(f"{rod1 = }, {rod2 = }, {rod3 = }")
     empty_rod3()
     print(f"{rod1 = }, {rod2 = }, {rod3 = }")
+    rod3.append(rod1.pop())
+    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
+    move2(rod2, rod3, rod_temp=rod1)
+    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
