@@ -2,12 +2,14 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 """Tower of Hanoi"""
-
+import copy
 
 # Move 3 disks from rod1 to rod3 in y moves
 MOVES3_1_3 = ((1, 3), (1, 2), (3, 2), (1, 3), (2, 1), (2, 3), (1, 3))
 # Move 3 disks from rod1 to rod2 in 7 moves
 MOVES3_1_2 = ((1, 2), (1, 3), (2, 3), (1, 2), (3, 1), (3, 2), (1, 2))
+# Move 3 disks from rod2 to rod3 in 7 moves
+MOVES3_2_3 = ((2, 3), (2, 1), (3, 1), (2, 3), (1, 2), (1, 3))
 # Move 4 disks from rod1 to rod3 in 15 moves
 # fmt: off
 MOVES4_1_3 = (
@@ -29,13 +31,16 @@ Tws = tuple[Rod, Rod, Rod]
 
 
 def _move(rods: Tws, moves: tuple[tuple[int, int], ...]) -> Tws:
+    # rods = copy.copy(rods)
+    for move in moves:
+        from_, to_ = move
+        x = rods[from_ - 1].pop()
+        rods[to_ - 1].append(x)
     return rods
 
 
 def setup(disks: int = 3) -> Tws:
-    rods: Tws = (Rod((3, 2, 1)), Rod(), Rod())
-    res: Tws = solve(rods)
-    return res
+    return (Rod((3, 2, 1)), Rod(), Rod())
 
 
 def solve(rods: Tws) -> Tws:
@@ -47,10 +52,13 @@ def solve(rods: Tws) -> Tws:
     elif len(rod1) == 3:
         return _move(rods, MOVES3_1_3)
     else:
-        return solve(_move(rods, MOVES3_1_2))
+        res = _move(rods, MOVES3_1_2)
+        res = _move(res, ((1, 3),))
+        return solve(_move(res, MOVES3_2_3))
 
 
 if __name__ == "__main__":
-    rods: Tws = setup(4)
+    rods: Tws = setup(3)
+    print(f"0 {rods = }")
     res: Tws = solve(rods)
-    print(f"{res = }")
+    print(f"1 {res = }")
