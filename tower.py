@@ -32,16 +32,14 @@ def _move(rods: Tws, moves: tuple[tuple[int, int], ...]) -> Tws:
     return rods
 
 
-def setup(disks: int = 3) -> None:
+def setup(disks: int = 3) -> Tws:
     rods: Tws = (Rod((3, 2, 1)), Rod(), Rod())
-    res: Tws
-    res = solve(rods)
-    print(res)
+    res: Tws = solve(rods)
+    return res
 
 
 def solve(rods: Tws) -> Tws:
     rod1: Rod = rods[0]
-    res: Tws
     if len(rod1) == 1:
         return _move(rods, ((1, 3),))
     elif len(rod1) == 2:
@@ -50,3 +48,9 @@ def solve(rods: Tws) -> Tws:
         return _move(rods, MOVES3_1_3)
     else:
         return solve(_move(rods, MOVES3_1_2))
+
+
+if __name__ == "__main__":
+    rods: Tws = setup(4)
+    res: Tws = solve(rods)
+    print(f"{res = }")
