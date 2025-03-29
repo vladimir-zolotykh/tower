@@ -4,6 +4,19 @@
 """Tower of Hanoi"""
 
 
+# Move 3 disks from rod1 to rod3 in y moves
+MOVES3_1_3 = ((1, 3), (1, 2), (3, 2), (1, 3), (2, 1), (2, 3), (1, 3))
+# Move 3 disks from rod1 to rod2 in 7 moves
+MOVES3_1_2 = ((1, 2), (1, 3), (2, 3), (1, 2), (3, 1), (3, 2), (1, 2))
+# Move 4 disks from rod1 to rod3 in 15 moves
+# fmt: off
+MOVES4_1_3 = (
+    (1, 2), (1, 3), (2, 3), (1, 2), (3, 1), (3, 2), (1, 2),
+    (1, 3), (2, 3), (2, 1), (3, 1), (2, 3), (1, 2), (1, 3), (2, 3)
+)
+# fmt: on
+
+
 class Rod(list):
     def append(self, d):
         if not self or d < self[-1]:
@@ -12,36 +25,28 @@ class Rod(list):
             raise ValueError(f"Can't put {d} on {self[-1]}")
 
 
-rod1 = Rod()
-rod2 = Rod()
-rod3 = Rod()
-
-for d in reversed(range(1, 4)):
-    rod1.append(d)
-# >>> rod1
-# [2, 1]
+Tws = list[Rod]
 
 
-def empty_rod3():
-    """Move disks from ROD3 to ROD1"""
-    move2(rod3, rod2, rod_temp=rod1)
+def _move(rods: Tws, moves: tuple[tuple[int, int], ...]) -> Tws:
+    return rods
 
 
-def move2(rod_from: Rod, rod_to: Rod, rod_temp: Rod = rod2):
-    """Move two top disks from ROD_FROM to ROD_TO"""
-    d = rod_from.pop()
-    rod_temp.append(d)
-    rod_to.append(rod_from.pop())
-    rod_to.append(rod_temp.pop())
+def setup(disks: int = 3) -> None:
+    rods: Tws = [Rod([3, 2, 1]), Rod(), Rod()]
+    res: Tws
+    res = solve(rods)
+    print(res)
 
 
-if __name__ == "__main__":
-    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
-    move2(rod1, rod3)
-    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
-    empty_rod3()
-    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
-    rod3.append(rod1.pop())
-    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
-    move2(rod2, rod3, rod_temp=rod1)
-    print(f"{rod1 = }, {rod2 = }, {rod3 = }")
+def solve(rods: Tws) -> Tws:
+    rod1: Rod = rods[0]
+    res: Tws
+    if len(rod1) == 1:
+        return _move(rods, ((1, 3),))
+    elif len(rod1) == 2:
+        return _move(rods, ((1, 2), (1, 3), (2, 3)))
+    elif len(rod1) == 3:
+        return _move(rod1, MOVES3_1_3)
+    else:
+        return solve(_move(rod1, MOVES3_1_2))
