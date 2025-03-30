@@ -38,6 +38,24 @@ def setup(disks: int = 3) -> Tws:
     return (Rod(reversed(range(1, disks + 1))), Rod(), Rod())
 
 
+Peg = Rod
+Pegs = Tws
+
+
+def solve2(pegs: Pegs) -> Pegs:
+    peg1: Peg = pegs[0]
+    if len(peg1) == 1:
+        return _move(pegs, ((1, 3),))
+    elif len(peg1) == 2:
+        return _move(pegs, ((1, 2), (1, 3), (2, 3)))
+    elif len(peg1) == 3:
+        return _move(pegs, MOVES3_1_3)
+    else:
+        d: int = pegs[0][0]  # Biggest disk
+        t: Pegs = solve2((pegs[0][1:], pegs[1], pegs[2]))
+        return solve2(((d, *t[0]), t[1], t[2]))
+
+
 def solve(rods: Tws) -> Tws:
     rod1: Rod = rods[0]
     if len(rod1) == 1:
