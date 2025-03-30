@@ -11,12 +11,7 @@ MOVES3_1_2 = ((1, 2), (1, 3), (2, 3), (1, 2), (3, 1), (3, 2), (1, 2))
 # Move 3 disks from rod2 to rod3 in 7 moves
 MOVES3_2_3 = ((2, 3), (2, 1), (3, 1), (2, 3), (1, 2), (1, 3))
 # Move 4 disks from rod1 to rod3 in 15 moves
-# fmt: off
-MOVES4_1_3 = (
-    (1, 2), (1, 3), (2, 3), (1, 2), (3, 1), (3, 2), (1, 2),
-    (1, 3), (2, 3), (2, 1), (3, 1), (2, 3), (1, 2), (1, 3), (2, 3)
-)
-# fmt: on
+MOVES4_1_3 = (*MOVES3_1_2, (1, 3), *MOVES3_2_3, (2, 3))
 
 
 class Rod(list):
@@ -27,7 +22,7 @@ class Rod(list):
             raise ValueError(f"Can't put {d} on {self[-1]}")
 
 
-Tws = tuple[Rod, Rod, Rod]
+Tws = tuple[Rod, Rod, Rod]  # towers
 
 
 def _move(rods: Tws, moves: tuple[tuple[int, int], ...]) -> Tws:
@@ -40,7 +35,7 @@ def _move(rods: Tws, moves: tuple[tuple[int, int], ...]) -> Tws:
 
 
 def setup(disks: int = 3) -> Tws:
-    return (Rod((3, 2, 1)), Rod(), Rod())
+    return (Rod(reversed(range(1, disks + 1))), Rod(), Rod())
 
 
 def solve(rods: Tws) -> Tws:
@@ -52,13 +47,11 @@ def solve(rods: Tws) -> Tws:
     elif len(rod1) == 3:
         return _move(rods, MOVES3_1_3)
     else:
-        res = _move(rods, MOVES3_1_2)
-        res = _move(res, ((1, 3),))
-        return solve(_move(res, MOVES3_2_3))
+        return _move(rods, MOVES4_1_3)
 
 
 if __name__ == "__main__":
-    rods: Tws = setup(3)
-    print(f"0 {rods = }")
-    res: Tws = solve(rods)
-    print(f"1 {res = }")
+    res: Tws = solve(setup(3))
+    print(f"3 disks: {res = }")
+    res = solve(setup(4))
+    print(f"4 disks: {res = }")
