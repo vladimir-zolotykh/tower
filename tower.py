@@ -52,8 +52,8 @@ def solve2(pegs: Pegs) -> Pegs:
         return _move(pegs, MOVES3_1_3)
     else:
         d: int = pegs[0][0]  # Biggest disk
-        t: Pegs = solve2((pegs[0][1:], pegs[1], pegs[2]))
-        return solve2(((d, *t[0]), t[1], t[2]))
+        t: Pegs = solve2([pegs[0][1:], pegs[1], pegs[2]])
+        return solve2([[d, *t[0]], t[1], t[2]])
 
 
 def solve(rods: Tws) -> Tws:
@@ -69,7 +69,7 @@ def solve(rods: Tws) -> Tws:
 
 
 if __name__ == "__main__":
-    res: Tws = solve(setup(3))
+    res: Tws = solve2(setup(3))
     print(f"3 disks: {res = }")
-    res = solve(setup(4))
+    res = solve2(setup(4))
     print(f"4 disks: {res = }")
