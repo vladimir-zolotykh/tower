@@ -6,6 +6,8 @@
 [[], [], [3, 2, 1]]
 >>> move3_0_1([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [3, 2, 1], []]
+>>> move3_1_2([Rod(), Rod([3, 2, 1]), Rod()])
+[[], [], [3, 2, 1]]
 >>> solve([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [], [3, 2, 1]]
 >>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
@@ -54,15 +56,20 @@ def move3_0_1(rods: Rods) -> Rods:
     return rods
 
 
+def move3_1_2(rods: Rods) -> Rods:
+    """Move 3 top disks from ROD1 to ROD2"""
+
+    move(rods, (1, 2), (1, 0), (2, 0), (1, 2), (0, 1), (0, 2), (1, 2))
+    return rods
+
+
 def solve(rods: Rods) -> Rods:
     if len(rods[0]) == 3:
-        move(rods, (0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2))
+        move3_0_2(rods)
     elif len(rods[0]) == 4:
-        # fmt: off
-        move(rods,
-             (0, 1), (0, 2), (1, 2), (0, 1), (2, 0), (2, 1), (0, 1), (0, 2),
-             (1, 2), (1, 0), (2, 0), (1, 2), (0, 1), (0, 2), (1, 2))
-        # fmt: on
+        move3_0_1(rods)
+        move(rods, (0, 2))
+        move3_1_2(rods)
     return rods
 
 
