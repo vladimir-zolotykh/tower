@@ -4,6 +4,8 @@
 """
 >>> solve([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [], [3, 2, 1]]
+>>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
+[[], [], [4, 3, 2, 1]]
 """
 
 from typing import Any
@@ -37,6 +39,12 @@ def move(rods: Rods, *moves: tuple[int, int]) -> Rods:
 def solve(rods: Rods) -> Rods:
     if len(rods[0]) == 3:
         move(rods, (0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2))
+    elif len(rods[0]) == 4:
+        # fmt: off
+        move(rods,
+             (0, 1), (0, 2), (1, 2), (0, 1), (2, 0), (2, 1), (0, 1), (0, 2),
+             (1, 2), (1, 0), (2, 0), (1, 2), (0, 1), (0, 2), (1, 2))
+        # fmt: on
     return rods
 
 
