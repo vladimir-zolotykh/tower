@@ -2,6 +2,10 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 """
+>>> move3_0_2([Rod([3, 2, 1]), Rod(), Rod()])
+[[], [], [3, 2, 1]]
+>>> move3_0_1([Rod([3, 2, 1]), Rod(), Rod()])
+[[], [3, 2, 1], []]
 >>> solve([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [], [3, 2, 1]]
 >>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
@@ -33,6 +37,20 @@ def move(rods: Rods, *moves: tuple[int, int]) -> Rods:
         assert move[0] != move[1]
         disk = rods[move[0]].pop()
         rods[move[1]].append(disk)
+    return rods
+
+
+def move3_0_2(rods: Rods) -> Rods:
+    """Move 3 top disks from ROD0 to ROD2"""
+
+    move(rods, (0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2))
+    return rods
+
+
+def move3_0_1(rods: Rods) -> Rods:
+    """Move 3 top disk from ROD0 to ROD1"""
+
+    move(rods, (0, 1), (0, 2), (1, 2), (0, 1), (2, 0), (2, 1), (0, 1))
     return rods
 
 
