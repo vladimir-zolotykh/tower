@@ -14,6 +14,8 @@
 [[], [], [4, 3, 2, 1]]
 >>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
 [[], [], [4, 3, 2, 1]]
+>>> solve([Rod([5, 4, 3, 2, 1]), Rod(), Rod()])
+[[], [], [5, 4, 3, 2, 1]]
 """
 
 from typing import Any
@@ -74,10 +76,40 @@ def move4_0_2(rods: Rods) -> Rods:
     return rods
 
 
-def move4_1_2(rods: Rods) -> Rods:
-    move3_0_1(rods)
+def move3_2_1(rods: Rods) -> Rods:
+    """Move 3 disks from ROD2 to ROD1
+
+    use ROD0 as temporary"""
+    move(rods, (2, 1), (2, 0), (1, 0), (2, 1), (0, 2), (0, 1), (2, 1))
+    return rods
+
+
+def move3_1_0(rods: Rods) -> Rods:
+    """Move 3 disks from ROD1 to ROD0
+
+    use ROD2 as temporary"""
+    move(rods, (1, 0), (1, 2), (0, 2), (1, 0), (2, 1), (2, 0), (1, 0))
+    return rods
+
+
+def move4_0_1(rods):
+    move3_0_2(rods)
+    move(rods, (0, 1))
+    move3_2_1(rods)
+    return rods
+
+
+def move4_1_2(rods):
+    move3_1_0(rods)
+    move(rods, (1, 2))
+    move3_0_2(rods)
+    return rods
+
+
+def move5_0_2(rods: Rods) -> Rods:
+    move4_0_1(rods)
     move(rods, (0, 2))
-    move3_1_2(rods)
+    move4_1_2(rods)
     return rods
 
 
@@ -87,9 +119,7 @@ def solve(rods: Rods) -> Rods:
     elif len(rods[0]) == 4:
         move4_0_2(rods)
     elif len(rods[0]) == 5:
-        move4_0_2(rods)
-        move(rods, (0, 2))
-        move4_1_2(rods)
+        move5_0_2(rods)
     else:
         raise ValueError("Not implemented yet")
     return rods
