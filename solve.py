@@ -10,7 +10,7 @@
 [[], [], [3, 2, 1]]
 >>> solve([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [], [3, 2, 1]]
->>> move4_0_1(([Rod([4, 3, 2, 1]), Rod(), Rod()]))
+>>> move4_0_2(([Rod([4, 3, 2, 1]), Rod(), Rod()]))
 [[], [], [4, 3, 2, 1]]
 >>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
 [[], [], [4, 3, 2, 1]]
@@ -65,7 +65,7 @@ def move3_1_2(rods: Rods) -> Rods:
     return rods
 
 
-def move4_0_1(rods: Rods) -> Rods:
+def move4_0_2(rods: Rods) -> Rods:
     """Move 4 disks from ROD0 to ROD1"""
 
     move3_0_1(rods)
@@ -85,9 +85,9 @@ def solve(rods: Rods) -> Rods:
     if len(rods[0]) == 3:
         move3_0_2(rods)
     elif len(rods[0]) == 4:
-        move4_0_1(rods)
+        move4_0_2(rods)
     elif len(rods[0]) == 5:
-        move4_0_1(rods)
+        move4_0_2(rods)
         move(rods, (0, 2))
         move4_1_2(rods)
     else:
