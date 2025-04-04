@@ -10,6 +10,8 @@
 [[], [], [3, 2, 1]]
 >>> solve([Rod([3, 2, 1]), Rod(), Rod()])
 [[], [], [3, 2, 1]]
+>>> move4_0_1(([Rod([4, 3, 2, 1]), Rod(), Rod()]))
+[[], [], [4, 3, 2, 1]]
 >>> solve([Rod([4, 3, 2, 1]), Rod(), Rod()])
 [[], [], [4, 3, 2, 1]]
 """
@@ -67,6 +69,7 @@ def move4_0_1(rods: Rods) -> Rods:
     move3_0_1(rods)
     move(rods, (0, 2))
     move3_1_2(rods)
+    return rods
 
 
 def move4_1_2(rods: Rods) -> Rods:
