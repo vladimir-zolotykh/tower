@@ -63,13 +63,30 @@ def move3_1_2(rods: Rods) -> Rods:
     return rods
 
 
+def move4_0_1(rods: Rods) -> Rods:
+    move3_0_1(rods)
+    move(rods, (0, 2))
+    move3_1_2(rods)
+
+
+def move4_1_2(rods: Rods) -> Rods:
+    pass
+
+
 def solve(rods: Rods) -> Rods:
     if len(rods[0]) == 3:
         move3_0_2(rods)
     elif len(rods[0]) == 4:
-        move3_0_1(rods)
+        move4_0_1(rods)
+        # move3_0_1(rods)
+        # move(rods, (0, 2))
+        # move3_1_2(rods)
+    elif len(rods[0]) == 5:
+        move4_0_1(rods)
         move(rods, (0, 2))
-        move3_1_2(rods)
+        move4_1_2(rods)
+    else:
+        raise ValueError("Not implemented yet")
     return rods
 
 
