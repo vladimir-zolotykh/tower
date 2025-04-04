@@ -66,6 +66,8 @@ def move3_1_2(rods: Rods) -> Rods:
 
 
 def move4_0_1(rods: Rods) -> Rods:
+    """Move 4 disks from ROD0 to ROD1"""
+
     move3_0_1(rods)
     move(rods, (0, 2))
     move3_1_2(rods)
@@ -73,7 +75,10 @@ def move4_0_1(rods: Rods) -> Rods:
 
 
 def move4_1_2(rods: Rods) -> Rods:
-    pass
+    move3_0_1(rods)
+    move(rods, (0, 2))
+    move3_1_2(rods)
+    return rods
 
 
 def solve(rods: Rods) -> Rods:
@@ -81,9 +86,6 @@ def solve(rods: Rods) -> Rods:
         move3_0_2(rods)
     elif len(rods[0]) == 4:
         move4_0_1(rods)
-        # move3_0_1(rods)
-        # move(rods, (0, 2))
-        # move3_1_2(rods)
     elif len(rods[0]) == 5:
         move4_0_1(rods)
         move(rods, (0, 2))
