@@ -41,18 +41,22 @@ def move(rods: Rods, *moves: tuple[int, int]):
     return rods
 
 
-def solve(rods: Rods, n: int, from_rod: int, to_rod):
+def solve(rods: Rods, n: int, from_rod: int, to_rod, show: bool = True):
+    """Move N disks from FROM_ROD to TO_ROD"""
+
     if (2, 0, 2) == (n, from_rod, to_rod):
         move(rods, (0, 1), (0, 2), (1, 2))
     elif (2, 0, 1) == (n, from_rod, to_rod):
         move(rods, (0, 2), (0, 1), (2, 1))
     elif (3, 0, 2) == (n, from_rod, to_rod):
-        move(rods, (0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2))
+        solve(rods, 2, 0, 1, show=False)
+        move(rods, (0, 2), (1, 0), (1, 2), (0, 2))
     elif (3, 0, 1) == (n, from_rod, to_rod):
         move(rods, (0, 1), (0, 2), (1, 2), (0, 1), (2, 0), (2, 1), (0, 1))
     else:
         raise ValueError("Not implemented")
-    print(rods)
+    if show:
+        print(rods)
 
 
 if __name__ == "__main__":
