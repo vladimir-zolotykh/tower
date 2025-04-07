@@ -54,7 +54,8 @@ def solve(rods: Rods, n: int, from_rod: int, to_rod, show: bool = True):
         move(rods, (1, 0), (1, 2), (0, 2))
     elif (3, 0, 2) == (n, from_rod, to_rod):
         solve(rods, 2, 0, 1, show=False)
-        move(rods, (0, 2), (1, 0), (1, 2), (0, 2))
+        move(rods, (0, 2))
+        solve(rods, 2, 1, 2, show=False)
     elif (3, 0, 1) == (n, from_rod, to_rod):
         move(rods, (0, 1), (0, 2), (1, 2), (0, 1), (2, 0), (2, 1), (0, 1))
     else:
