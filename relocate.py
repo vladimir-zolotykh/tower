@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
-"""
->>> solve([[3, 2, 1], [], []], 3, 0, 2)
-[[], [], [3, 2, 1]]
->>> solve([[4, 3, 2, 1], [], []], 4, 0, 2)
-[[], [], [4, 3, 2, 1]]
-"""
-
 from typing import Any
 
 
@@ -26,30 +19,32 @@ class Rod(list):
 
 
 Rods = list[Rod]
-rods: Rods = []
+rods: Rods
 
 
-def move(rods: Rods, *moves: tuple[int, int]):
+def move(*moves: tuple[int, int]) -> None:
+    global rods
     for move in moves:
         assert move[0] != move[1]
         disk = rods[move[0]].pop()
         rods[move[1]].append(disk)
-    return rods
 
 
-def solve(rods: Rods, n: int, i: int, j: int) -> None:
-    t: int = set(range(3)) - set([i, j])  # temporary rod
+def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
+    global rods
+    if rods0:
+        rods = rods0
+    t: int = (set(range(3)) - set([i, j])).pop()
     if n == 1:
-        move(rods, i, j)
+        move((i, j))
     elif n == 2:
-        move(rods, (i, t), (i, j), (t, j))
+        move((i, t), (i, j), (t, j))
     if n == 3:
-        solve(rods, n - 1, i, t, show=False)
-        move(rods, (i, j))
-        solve(rods, n - 1, t, j, show=False)
+        solve(n - 1, i, t)
+        move((i, j))
+        solve(n - 1, t, j)
 
 
 if __name__ == "__main__":
-    import doctest
-
-    doctest.testmod()
+    solve(3, 0, 2, rods0=[[3, 2, 1], [], []])
+    print(rods)
