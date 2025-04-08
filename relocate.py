@@ -2,19 +2,10 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 """
-# >>> solve([[2, 1], [], []], 2, 0, 2)
-# [[], [], [2, 1]]
-# >>> solve([[2, 1], [], []], 2, 0, 1)
-# [[], [2, 1], []]
-# >>> solve([[], [2, 1], []], 2, 1, 2)
-# [[], [], [2, 1]]
 >>> solve([[3, 2, 1], [], []], 3, 0, 2)
 [[], [], [3, 2, 1]]
 >>> solve([[4, 3, 2, 1], [], []], 4, 0, 2)
 [[], [], [4, 3, 2, 1]]
-
-# >>> solve([[3, 2, 1], [], []], 3, 0, 1)
-# [[], [3, 2, 1], []]
 """
 
 from typing import Any
@@ -46,39 +37,16 @@ def move(rods: Rods, *moves: tuple[int, int]):
     return rods
 
 
-def solve(rods: Rods, n: int, from_rod: int, to_rod, show: bool = True):
-    """Move N disks from FROM_ROD to TO_ROD"""
-
-    if (2, 0, 2) == (n, from_rod, to_rod):
-        move(rods, (0, 1), (0, 2), (1, 2))
-    elif (2, 1, 0) == (n, from_rod, to_rod):
-        move(rods, (1, 2), (1, 0), (2, 0))
-    elif (2, 0, 1) == (n, from_rod, to_rod):
-        move(rods, (0, 2), (0, 1), (2, 1))
-    elif (2, 2, 1) == (n, from_rod, to_rod):
-        move(rods, (2, 0), (2, 1), (0, 1))
-    elif (2, 1, 2) == (n, from_rod, to_rod):
-        move(rods, (1, 0), (1, 2), (0, 2))
-    elif (3, 0, 2) == (n, from_rod, to_rod):
-        solve(rods, 2, 0, 1, show=False)
-        move(rods, (0, 2))
-        solve(rods, 2, 1, 2, show=False)
-    elif (4, 0, 2) == (n, from_rod, to_rod):
-        solve(rods, 3, 0, 1, show=False)
-        move(rods, (0, 2))
-        solve(rods, 3, 1, 2, show=False)
-    elif (3, 0, 1) == (n, from_rod, to_rod):
-        solve(rods, 2, 0, 2, show=False)
-        move(rods, (0, 1))
-        solve(rods, 2, 2, 1, show=False)
-    elif (3, 1, 2) == (n, from_rod, to_rod):
-        solve(rods, 2, 1, 0, show=False)
-        move(rods, (1, 2))
-        solve(rods, 2, 0, 2, show=False)
-    else:
-        raise ValueError(f"({n}, {from_rod}, {to_rod}): Not implemented")
-    if show:
-        print(rods)
+def solve(rods: Rods, n: int, i: int, j: int) -> None:
+    t: int = set(range(3)) - set([i, j])  # temporary rod
+    if n == 1:
+        move(rods, i, j)
+    elif n == 2:
+        move(rods, (i, t), (i, j), (t, j))
+    if n == 3:
+        solve(rods, n - 1, i, t, show=False)
+        move(rods, (i, j))
+        solve(rods, n - 1, t, j, show=False)
 
 
 if __name__ == "__main__":
