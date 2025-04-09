@@ -4,6 +4,8 @@
 """
 >>> print(solve(3, 0, 2, rods0 = [[3, 2, 1], [], []]))
 [[], [], [3, 2, 1]]
+>>> print(solve(4, 0, 2, rods0 = [[4, 3, 2, 1], [], []]))
+[[], [], [4, 3, 2, 1]]
 """
 
 from typing import Any
@@ -44,7 +46,7 @@ def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
         move((i, j))
     elif n == 2:
         move((i, t), (i, j), (t, j))
-    if n == 3:
+    if 3 <= n:
         solve(n - 1, i, t)
         move((i, j))
         solve(n - 1, t, j)
