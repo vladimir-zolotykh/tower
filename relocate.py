@@ -3,15 +3,17 @@
 # PYTHON_ARGCOMPLETE_OK
 """
 >>> print(solve(3, 0, 2, rods0 = make_rods0(3)))
-[[], [], [3, 2, 1]]
+([[], [], [3, 2, 1]], 7)
 >>> print(solve(4, 0, 2, rods0 = make_rods0(4)))
-[[], [], [4, 3, 2, 1]]
+([[], [], [4, 3, 2, 1]], 15)
 >>> print(solve(5, 0, 2, rods0 = make_rods0(5)))
-[[], [], [5, 4, 3, 2, 1]]
+([[], [], [5, 4, 3, 2, 1]], 31)
 >>> print(solve(6, 0, 2, rods0 = make_rods0(6)))
-[[], [], [6, 5, 4, 3, 2, 1]]
+([[], [], [6, 5, 4, 3, 2, 1]], 63)
 >>> print(solve(7, 0, 2, rods0 = make_rods0(7)))
-[[], [], [7, 6, 5, 4, 3, 2, 1]]
+([[], [], [7, 6, 5, 4, 3, 2, 1]], 127)
+>>> print(solve(8, 0, 2, rods0 = make_rods0(8)))
+([[], [], [8, 7, 6, 5, 4, 3, 2, 1]], 255)
 """
 
 from typing import Any
@@ -33,14 +35,17 @@ class Rod(list):
 
 Rods = list[Rod]
 rods: Rods
+count: int = 0  # total moves
 
 
 def move(*moves: tuple[int, int]) -> None:
     global rods
+    global count
     for move in moves:
         assert move[0] != move[1]
         disk = rods[move[0]].pop()
         rods[move[1]].append(disk)
+        count += 1
 
 
 def make_rods0(n: int) -> Rods:
@@ -49,8 +54,10 @@ def make_rods0(n: int) -> Rods:
 
 def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
     global rods
+    global count
     if rods0:
         rods = rods0
+        count = 0
     t: int = (set(range(3)) - set([i, j])).pop()
     if n == 1:
         move((i, j))
@@ -61,7 +68,7 @@ def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
         move((i, j))
         solve(n - 1, t, j)
     if rods0:
-        return rods
+        return rods, count
 
 
 if __name__ == "__main__":
