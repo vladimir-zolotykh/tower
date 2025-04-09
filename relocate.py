@@ -10,6 +10,8 @@
 [[], [], [5, 4, 3, 2, 1]]
 >>> print(solve(6, 0, 2, rods0 = make_rods0(6)))
 [[], [], [6, 5, 4, 3, 2, 1]]
+>>> print(solve(7, 0, 2, rods0 = make_rods0(7)))
+[[], [], [7, 6, 5, 4, 3, 2, 1]]
 """
 
 from typing import Any
