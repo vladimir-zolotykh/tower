@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
+"""
+>>> print(solve(3, 0, 2, rods0 = [[3, 2, 1], [], []]))
+[[], [], [3, 2, 1]]
+"""
+
 from typing import Any
 
 
@@ -43,8 +48,11 @@ def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
         solve(n - 1, i, t)
         move((i, j))
         solve(n - 1, t, j)
+    if rods0:
+        return rods
 
 
 if __name__ == "__main__":
-    solve(3, 0, 2, rods0=[[3, 2, 1], [], []])
-    print(rods)
+    import doctest
+
+    doctest.testmod()
