@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
 """
->>> print(solve(3, 0, 2, rods0 = [[3, 2, 1], [], []]))
+>>> print(solve(3, 0, 2, rods0 = make_rods0(3)))
 [[], [], [3, 2, 1]]
->>> print(solve(4, 0, 2, rods0 = [[4, 3, 2, 1], [], []]))
+>>> print(solve(4, 0, 2, rods0 = make_rods0(4)))
 [[], [], [4, 3, 2, 1]]
->>> print(solve(5, 0, 2, rods0 = [[5, 4, 3, 2, 1], [], []]))
+>>> print(solve(5, 0, 2, rods0 = make_rods0(5)))
 [[], [], [5, 4, 3, 2, 1]]
->>> print(solve(6, 0, 2, rods0 = [[6, 5, 4, 3, 2, 1], [], []]))
+>>> print(solve(6, 0, 2, rods0 = make_rods0(6)))
 [[], [], [6, 5, 4, 3, 2, 1]]
 """
 
@@ -39,6 +39,10 @@ def move(*moves: tuple[int, int]) -> None:
         assert move[0] != move[1]
         disk = rods[move[0]].pop()
         rods[move[1]].append(disk)
+
+
+def make_rods0(n: int) -> Rods:
+    return [Rod(range(n, 0, -1)), Rod(), Rod()]
 
 
 def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
