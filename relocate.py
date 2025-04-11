@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
-from typing import Any
+from typing import Optional, Any, SupportsIndex
 import unittest
 
 
@@ -12,7 +12,7 @@ class Rod(list):
         else:
             raise ValueError(f"Can't put larger {d} on smaller {self[-1]}")
 
-    def pop(self, index: int = -1) -> Any:
+    def pop(self, index: SupportsIndex = -1) -> Any:
         if index != -1:
             raise ValueError("Can POP only the last element of the list")
         else:
@@ -38,7 +38,11 @@ def make_rods0(n: int) -> Rods:
     return [Rod(range(n, 0, -1)), Rod(), Rod()]
 
 
-def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
+# fmt: off
+def solve(
+        n: int, i: int, j: int, rods0: Rods | None = None
+) -> Optional[tuple[Rods, int]]:
+    # fmt: on
     global rods
     global count
     if rods0:
@@ -55,18 +59,26 @@ def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
         solve(n - 1, t, j)
     if rods0:
         return rods, count
+    else:
+        return None
 
 
 class TowerTest(unittest.TestCase):
     max_disks: int = 8
 
-    def test_towers(self):
+    def setUp(self, *args, **kw) -> None:
+        super().setUp(*args, **kw)
+        print()
+
+    def test_towers(self) -> None:
         for n in range(3, self.max_disks + 1):
             global rods
             rods0: Rods = make_rods0(n)
+            print(f"Testing {n} disks")
             solve(n, 0, 2, rods0=rods0)
             self.assertEqual(rods, rods0)
 
 
 if __name__ == "__main__":
+    TowerTest.max_disks = 8
     unittest.main(verbosity=2)
