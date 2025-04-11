@@ -65,6 +65,7 @@ def solve(
 
 class TowerTest(unittest.TestCase):
     max_disks: int = 8
+    num_moves: list[int] = [7, 15, 31, 63, 127, 255]
 
     def setUp(self, *args, **kw) -> None:
         super().setUp(*args, **kw)
@@ -75,7 +76,10 @@ class TowerTest(unittest.TestCase):
             global rods
             rods0: Rods = make_rods0(n)
             print(f"Testing {n} disks")
-            solve(n, 0, 2, rods0=rods0)
+            _res: Optional[tuple[Rods, int]] = solve(n, 0, 2, rods0=rods0)
+            self.assertTrue(_res)
+            assert _res
+            self.assertEqual(_res[1], self.num_moves.pop(0))
             self.assertEqual(rods, rods0)
 
 
