@@ -1,24 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # PYTHON_ARGCOMPLETE_OK
-"""
->>> print(solve(3, 0, 2, rods0 = make_rods0(3)))
-([[], [], [3, 2, 1]], 7)
->>> print(solve(4, 0, 2, rods0 = make_rods0(4)))
-([[], [], [4, 3, 2, 1]], 15)
->>> print(solve(5, 0, 2, rods0 = make_rods0(5)))
-([[], [], [5, 4, 3, 2, 1]], 31)
->>> print(solve(6, 0, 2, rods0 = make_rods0(6)))
-([[], [], [6, 5, 4, 3, 2, 1]], 63)
->>> print(solve(7, 0, 2, rods0 = make_rods0(7)))
-([[], [], [7, 6, 5, 4, 3, 2, 1]], 127)
->>> print(solve(8, 0, 2, rods0 = make_rods0(8)))
-([[], [], [8, 7, 6, 5, 4, 3, 2, 1]], 255)
->>> print(solve(9, 0, 2, rods0 = make_rods0(9)))
-([[], [], [9, 8, 7, 6, 5, 4, 3, 2, 1]], 511)
-"""
-
 from typing import Any
+import unittest
 
 
 class Rod(list):
@@ -73,7 +57,16 @@ def solve(n: int, i: int, j: int, rods0: Rods | None = None) -> None:
         return rods, count
 
 
-if __name__ == "__main__":
-    import doctest
+class TowerTest(unittest.TestCase):
+    max_disks: int = 8
 
-    doctest.testmod()
+    def test_towers(self):
+        for n in range(3, self.max_disks + 1):
+            global rods
+            rods0: Rods = make_rods0(n)
+            solve(n, 0, 2, rods0=rods0)
+            self.assertEqual(rods, rods0)
+
+
+if __name__ == "__main__":
+    unittest.main(verbosity=2)
